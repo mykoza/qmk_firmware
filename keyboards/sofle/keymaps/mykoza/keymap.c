@@ -1,4 +1,6 @@
-#include QMK_KEYBOARD_H
+#include "sofle/sofle.h"
+#include "sofle/rev1/rev1.h"
+#include "sofle/rev1/config.h"
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -28,7 +30,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *            `----------------------------------'           '------''---------------------------'
      */
 
-    [_QWERTY] = LAYOUT(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_GRV, KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE, XXXXXXX, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_LGUI, KC_LALT, KC_LCTRL, KC_LOWER, KC_ENT, KC_SPC, KC_RAISE, KC_RCTRL, KC_RALT, KC_RGUI),
+    [_QWERTY] = LAYOUT(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE, XXXXXXX, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_LGUI, KC_LALT, KC_LCTRL, KC_SPC, KC_LOWER, KC_RAISE, KC_ENT, KC_BSPC, KC_RALT, KC_RGUI),
+
     /*
      * COLEMAK
      * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -75,7 +78,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *            |      |      |      |      |/       /         \      \ |      |      |      |      |
      *            `----------------------------------'           '------''---------------------------'
      */
-    [_RAISE] = LAYOUT(_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_INS, KC_PSCR, KC_APP, XXXXXXX, XXXXXXX, KC_PGUP, KC_PRVWD, KC_UP, KC_NXTWD, KC_DLINE, KC_BSPC, _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_CAPS, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL, KC_BSPC, _______, KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX, _______, _______, XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND, XXXXXXX, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
+    [_RAISE] = LAYOUT(\
+    _______, _______, _______, _______, _______, _______,      KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______,\
+    _______, KC_INS, KC_PSCR, KC_APP, XXXXXXX, XXXXXXX,        KC_PGUP, KC_PRVWD, KC_UP, KC_NXTWD, KC_DLINE, KC_BSPC,\
+    _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_CAPS,      KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_DEL, KC_BSPC,\
+    _______, KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,      KC_PGDN, _______, XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,\
+    XXXXXXX, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
     /* ADJUST
      * ,-----------------------------------------.                    ,-----------------------------------------.
      * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
@@ -178,7 +187,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_LOWER:
             if (record->event.pressed) {
                 layer_on(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                update_tri_layer(_LOWER, _RAISE, _ADJUST);  // turn on ADJUST when LOWER and RAISE are on
             } else {
                 layer_off(_LOWER);
                 update_tri_layer(_LOWER, _RAISE, _ADJUST);
