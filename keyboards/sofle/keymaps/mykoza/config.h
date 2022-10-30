@@ -3,6 +3,8 @@
 #undef MANUFACTURER
 #define MANUFACTURER MK
 
+#define EE_HANDS
+
 #undef DEBOUNCE
 #define DEBOUNCE 4
 #define USB_POLLING_INTERVAL_MS 1
