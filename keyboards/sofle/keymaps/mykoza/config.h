@@ -1,8 +1,5 @@
 #pragma once
 
-#undef MANUFACTURER
-#define MANUFACTURER MK
-
 #define EE_HANDS
 
 #undef DEBOUNCE
@@ -23,7 +20,5 @@
 
 // Disabled for LTO and save space
 #define LAYER_STATE_8BIT
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 #define NO_ACTION_ONESHOT // Save 244 bytes
 //#define NO_RESET //Save 40 bytes
